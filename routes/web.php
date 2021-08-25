@@ -24,7 +24,9 @@ Route::get('/contact', function(){
 // pass parameter
 Route::get('/posts/{id}', function($id){
     return "Blog Post Num:" . $id;
-})->name('posts.show');
+})->where([
+    'id'=> '[0-9]+'
+])->name('posts.show');
 
 // Optional Parameter
 Route::get('/recent-posts/{id?}', function($daysAgo = 20){
