@@ -13,20 +13,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Inside the home folder
 Route::get('/', function () {
-    return view('welcome');
+    return view('home.index', []);
 })->name('home.index');
 
 Route::get('/contact', function(){
-    return "Aya haya contact aaa";
+    return view('home.contact');
 })->name('Contact.index');
 
 // pass parameter
 Route::get('/posts/{id}', function($id){
     return "Blog Post Num:" . $id;
-})->where([
-    'id'=> '[0-9]+'
-])->name('posts.show');
+})
+// ->where([
+//     'id'=> '[0-9]+'
+// ])
+->name('posts.show');
 
 // Optional Parameter
 Route::get('/recent-posts/{id?}', function($daysAgo = 20){
