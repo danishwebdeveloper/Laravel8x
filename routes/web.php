@@ -1,6 +1,11 @@
 <?php
 
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostsController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,8 +29,20 @@ use Illuminate\Support\Facades\Route;
 
 
 // New method o make routing if no need to return any object from here
-Route::view('/', 'home.index')->name('home.index');
-Route::view('/contact', 'home.contact')->name('contact.index');
+// Route::view('/', 'home.index')->name('home.index');
+// Route::view('/contact', 'home.contact')->name('contact.index');
+
+// If handle through controller then we have to do like that
+Route::get('/', [HomeController::class, 'Home'])
+->name('home.index');
+Route::get('/contact', [HomeController::class, 'Contact'])
+->name('contact.index');
+
+// Single Action Controller
+Route::get('/single', AboutController::class);
+
+// For Resourse Controller
+Route::resource('posts', PostsController::class)->only(['index', 'show']);
 
 // Now Global declaration and use it using use($posts)
 $posts = [
@@ -48,23 +65,23 @@ $posts = [
        
     ]
 ];
+ 
+// Route::get('/posts', function() use($posts){
+//     return view('Posts.index', ['posts'=> $posts]);
+// });
 
-Route::get('/posts', function() use($posts){
-    return view('Posts.index', ['posts'=> $posts]);
-});
+// // pass parameter
+// Route::get('/posts/{id}', function($id) use($posts){
+//     // If not exist get 404 not poage found error
+//     abort_if(!isset($posts[$id]), 404);
 
-// pass parameter
-Route::get('/posts/{id}', function($id) use($posts){
-    // If not exist get 404 not poage found error
-    abort_if(!isset($posts[$id]), 404);
-
-    // Here 'post' store value and we use it Posts.show section and give them a value etc
-    return view('Posts.show', ['post'=> $posts[$id]]);
-})
-// ->where([
-//     'id'=> '[0-9]+'
-// ])
-->name('posts.show');
+//     // Here 'post' store value and we use it Posts.show section and give them a value etc
+//     return view('Posts.show', ['post'=> $posts[$id]]);
+// })
+// // ->where([
+// //     'id'=> '[0-9]+'
+// // ])
+// ->name('posts.show');
 
 
 // HTTP Response, Dummy Response
