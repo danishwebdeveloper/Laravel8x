@@ -66,6 +66,45 @@ Route::get('/posts/{id}', function($id) use($posts){
 // ])
 ->name('posts.show');
 
+
+// HTTP Response, Dummy Response
+Route::get('/fun/response', function() use($posts){
+    return response($posts, 201)
+    ->header('Content-Type', 'application/json')
+    ->cookie('MY_COOKIE', 'Muhammad Danish', 3600);
+});
+
+// Grouping Routes
+Route::prefix('/fun')->name('fun.')->group(function() use($posts){
+    // Multiple ways of Redirect Routes
+Route::get('/redirect', function() use($posts){
+    return redirect('/contact');
+})->name('redirect.index');
+
+Route::get('/back', function() use($posts){
+    return back();
+})->name('back.index');
+
+Route::get('/route-name', function() use($posts){
+    return redirect()->route('posts.show', ['id' => 1]);
+})->name('route-name');
+
+Route::get('/away', function() use($posts){
+    return redirect()->away('https://google.com');
+})->name('away.index');
+
+// Json reponse
+Route::get('/json', function() use($posts){
+    return response()->json($posts);
+})->name('away.index');
+
+// Returning Downlaod File
+Route::get('/download', function(){
+    return response()->download(public_path('/dd.jpg', 'face.jpg'));
+})->name('downlaod.index');
+});
+
+
 // Optional Parameter
 Route::get('/recent-posts/{id?}', function($daysAgo = 20){
     return "Posts From " . $daysAgo . " Days Ago";
