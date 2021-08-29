@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Storepost;
 use App\Models\BlogPost;
 use Illuminate\Http\Request;
 
@@ -55,16 +56,21 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Storepost $request)
     {
-        $request->validate([
-            'title' => 'bail|required|min:5|max:20',
-            'content' => 'required|min:5'
-        ]);
-        $post = new BlogPost();
-        $post->title = $request->input('title');
-        $post->content = $request->input('content');
-        $post->save();
+        $validated = $request->validated();
+
+        // Section without the Mass Assignment (fillable)
+        // $post = new BlogPost();
+        // $post->title = $validate['title'];
+        // $post->content = $validate['content'];
+        // $post->save();
+
+        // Use effecient method to do that using Mass Assignment Fillable
+        $post = BlogPost::create($validated);
+
+        // Delaration but use it in the main layout.app
+        $request->session()->flash('status', 'The Blog Post has Created Sussessfully!');
 
         return redirect()->route('posts.show', ['post'=> $post->id]);
     }
@@ -92,7 +98,8 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = BlogPost::findOrFail($id);
+        return view('Posts.edit', ['post'=> $post]);
     }
 
     /**
