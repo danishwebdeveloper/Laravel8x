@@ -42,7 +42,9 @@ Route::get('/contact', [HomeController::class, 'Contact'])
 Route::get('/single', AboutController::class);
 
 // For Resourse Controller
-Route::resource('posts', PostsController::class)->only(['index', 'show', 'create', 'store', 'edit', 'update']);
+Route::resource('posts', PostsController::class);
+// For specific which you need only
+// ->only(['index', 'show', 'create', 'store', 'edit', 'update']);
 
 // Now Global declaration and use it using use($posts)
 $posts = [

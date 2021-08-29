@@ -68,7 +68,7 @@ class PostsController extends Controller
 
         // Use effecient method to do that using Mass Assignment Fillable
         $post = BlogPost::create($validated);
-        
+
         // Delaration but use it in the main layout.app
         $request->session()->flash('status', 'The Blog Post has Created Sussessfully!');
 
@@ -130,6 +130,13 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // dump and die
+        // dd($id);
+
+        $post = BlogPost::findOrFail($id);
+        $post->delete();
+
+        session()->flash('status', $id . ' Number Blog is Deleted');
+        return redirect()->route('posts.index');
     }
 }
