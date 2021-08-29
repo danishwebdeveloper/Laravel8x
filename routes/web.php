@@ -42,7 +42,7 @@ Route::get('/contact', [HomeController::class, 'Contact'])
 Route::get('/single', AboutController::class);
 
 // For Resourse Controller
-Route::resource('posts', PostsController::class)->only(['index', 'show']);
+Route::resource('posts', PostsController::class)->only(['index', 'show', 'create', 'store']);
 
 // Now Global declaration and use it using use($posts)
 $posts = [
@@ -65,7 +65,7 @@ $posts = [
        
     ]
 ];
- 
+  
 // Route::get('/posts', function() use($posts){
 //     return view('Posts.index', ['posts'=> $posts]);
 // });
