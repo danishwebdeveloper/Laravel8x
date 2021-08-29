@@ -68,7 +68,7 @@ class PostsController extends Controller
 
         // Use effecient method to do that using Mass Assignment Fillable
         $post = BlogPost::create($validated);
-
+        
         // Delaration but use it in the main layout.app
         $request->session()->flash('status', 'The Blog Post has Created Sussessfully!');
 
@@ -98,8 +98,8 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        $post = BlogPost::findOrFail($id);
-        return view('Posts.edit', ['post'=> $post]);
+        
+        return view('Posts.edit', ['post' => BlogPost::findOrFail($id)]);
     }
 
     /**
@@ -109,9 +109,17 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Storepost $request, $id)
     {
-        //
+        $post = BlogPost::findOrFail($id);
+        $validated = $request->validated();
+        $post->fill($validated);
+        $post->save();
+
+        // Now put some flash message and redirect
+        $request->session()->flash('status', 'the post is updated successfully!');
+
+        return redirect()->route('posts.show', ['post'=> $post->id]);
     }
 
     /**
