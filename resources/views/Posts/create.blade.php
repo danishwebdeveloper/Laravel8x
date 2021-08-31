@@ -9,7 +9,8 @@
         
         @include('Posts.Partials.form')
 
-        <div><input type="submit" value="Create"/></div>
+        <button type="submit" class="btn btn-primary">Create</button>
+       
     </form>
 @endsection
 
