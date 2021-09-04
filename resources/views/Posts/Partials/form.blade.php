@@ -15,7 +15,7 @@
     <div class="form-group">
         <label for="exampleInputPassword1">Password</label>
         <textarea name="content" class="form-control" placeholder="Please enter content">{{ old('content', optional($post ?? null)->content) }}</textarea>
-      </div>
+    </div>
 
         {{-- Combined error for all  --}}
         @if ($errors->any())

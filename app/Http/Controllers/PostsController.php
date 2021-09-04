@@ -50,14 +50,9 @@ class PostsController extends Controller
         return view('posts.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Storepost $request)
     {
+        // Storepost created inside the requests
         $validated = $request->validated();
 
         // Section without the Mass Assignment (fillable)
