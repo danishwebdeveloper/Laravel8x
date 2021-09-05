@@ -53,6 +53,7 @@ class PostsController extends Controller
     public function store(Storepost $request)
     {
         // Storepost created inside the requests
+        // Plus we also post-title and post->content into the BlogPost Model
         $validated = $request->validated();
 
         // Section without the Mass Assignment (fillable)
