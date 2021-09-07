@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\BlogPost;
+use App\Models\Comment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use Tests\TestCase;
@@ -14,8 +15,27 @@ class PostTest extends TestCase
     public function test_PostWhenNoPost()
     {
         $response = $this->get('/posts');
-        $response->assertSeeText('No blog posts yet!');
+        $response->assertSeeText('No Post Yet!');
+    
     }
+
+    public function testFactoryComments(){
+        
+        // Arrange
+        $post = $this->createDummyBlogPost();
+        Comment::factory()->count(4)->create(
+            [
+                'blog_post_id' => $post->id,
+            ]);
+
+        // Act
+            $response = $this->get('/posts');
+        
+        // Assert
+        $response->assertSeeText('Comment on Post: 4');
+        
+    }
+
     public function test_Post1BlogPostAtLeastThere()
     {
 
@@ -29,9 +49,17 @@ class PostTest extends TestCase
         $response = $this->get('/posts');
 
         // Step 3 Assert part 
-        $response->assertSeeText('Form check');
-        $this->assertDatabaseHas('blog_posts', [
-            'title' => 'Form check'
-        ]);
+        $response->assertSeeText('No Comment Yet!');
+        
+    }
+
+    // Get data from BlogPost Model that connected with Db and all time we get fresh data and we test that is it works or not
+    private function createDummyBlogPost(): BlogPost 
+    {
+        $post = new BlogPost();
+        $post->title = "New Title";
+        $post->content = "A new content is here";
+        $post->save();
+        return $post;
     }
 }

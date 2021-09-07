@@ -27,7 +27,7 @@
         {{--  Using the partial template, And always inside the foreach loop --}}
         @include('Posts.Partials.post', [])
     @empty
-        No Posts Found!!
+        No Post Yet!
     @endforelse
 
 @endsection

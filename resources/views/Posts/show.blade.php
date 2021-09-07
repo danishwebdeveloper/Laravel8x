@@ -5,8 +5,9 @@
 
 @section('content')
 
-    <h1>{{ $post['title'] }}</h1>
-    <p>{{ $post['content'] }}</p>
+    <h1>{{ $post->title}}</h1>
+    <p>{{ $post->content }}</p>
+    
 
     @if ($post['is_new'])
         <div>The post is new, using If</div>
@@ -23,4 +24,16 @@
         <div>The post has comment, using isset and 2nd post has comment</div>
     @endisset
 
-@endsection
+    <div class="mt-3">
+    <h4>Comments on Posts:</h4>
+    @forelse ($post->comment as $comment )
+    <p>
+        {{-- @dd($comment) --}}
+        {{ $comment->content }}, <b>Added</b> {{ $comment->created_at->diffForHumans() }}
+    </p>
+    @empty
+        <p>No Comment Yet!</p>
+    @endforelse
+</div>
+
+@endsection('content')

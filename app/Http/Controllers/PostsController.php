@@ -98,7 +98,10 @@ class PostsController extends Controller
         
         // return view('Posts.index', ['posts'=> $this->posts]);
 
-        return view('posts.show', ['post'=> BlogPost::findOrFail($id)]);
+        return view('posts.show', 
+        ['post'=> BlogPost::with('comment')->findOrFail($id)]
+    
+    );
     }
 
     /**
