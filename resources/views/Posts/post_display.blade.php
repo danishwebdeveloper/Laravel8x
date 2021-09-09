@@ -3,5 +3,5 @@
 @section('title', 'Single Page Post')
 
 @section('content')
- <p>S P P</p>    
+ <p>Single Page Post</p>    
 @endsection
