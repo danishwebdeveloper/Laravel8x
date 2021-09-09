@@ -132,3 +132,6 @@ Route::get('/download', function(){
 Route::get('/recent-posts/{id?}', function($daysAgo = 20){
     return "Posts From " . $daysAgo . " Days Ago";
 })->name('post.recent.index');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
